@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h1>List of Employees</h1>
+
+        <nav aria-label="...">
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${result.first} ? disabled : ''">
+                    <span th:if="${result.first}" class="page-link">Previous</span>
+                    <a th:if="!${result.first}" class="page-link" th:href="@{/employee(pageSize=${result.pageSize}, pageNo=${result.pageNo - 1})}">Previous</a>
+                </li>
+<!--                <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--                <li class="page-item active" aria-current="page">-->
+<!--                    <span class="page-link">2</span>-->
+<!--                </li>-->
+<!--                <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+                <li class="page-item" th:classappend="${result.last} ? disabled : ''">
+                    <span th:if="${result.last}" class="page-link">Next</span>
+                    <a th:if="!${result.last}" class="page-link" th:href="@{/employee(pageSize=${result.pageSize}, pageNo=${result.pageNo + 1})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+
+        <table class="table">
+            <tr>
+                <th>Emp No</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+            </tr>
+            <tr th:each="employee : ${result.data}">
+                <td><a th:href="@{/employee/{id}(id=${employee.empNo})}" th:text="${employee.empNo}"></a></td>
+                <td th:text="${employee.firstName}"></td>
+                <td th:text="${employee.lastName}"></td>
+            </tr>
+
+        </table>
+    </div>
+</body>
+</html>
