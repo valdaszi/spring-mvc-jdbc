@@ -19,5 +19,6 @@ public class EmployeeRowMapper implements RowMapper<Employee> {
         e.setBirthDate(rs.getDate("birth_date").toLocalDate());
         e.setHireDate(rs.getDate("hire_date").toLocalDate());
         e.setGender(Gender.valueOf(rs.getString("gender")));
-        return e;    }
+        return e;
+    }
 }

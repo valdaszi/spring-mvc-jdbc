@@ -10,21 +10,45 @@
         <h1>List of Employees</h1>
 
         <nav aria-label="...">
-            <ul class="pagination">
-                <li class="page-item" th:classappend="${result.first} ? disabled : ''">
-                    <span th:if="${result.first}" class="page-link">Previous</span>
-                    <a th:if="!${result.first}" class="page-link" th:href="@{/employee(pageSize=${result.pageSize}, pageNo=${result.pageNo - 1})}">Previous</a>
+
+            <ul class="pagination" th:if="${result.pagesCount} &gt; 0">
+
+                <li class="page-item" th:classappend="${result.first} ? disabled">
+                    <span class="page-link" th:if="${result.first}">Previous</span>
+                    <a class="page-link" th:if="!${result.first}" th:href="@{/employee(pageSize=${result.pageSize}, pageNo=${result.pageNo - 1})}">Previous</a>
                 </li>
-<!--                <li class="page-item"><a class="page-link" href="#">1</a></li>-->
-<!--                <li class="page-item active" aria-current="page">-->
-<!--                    <span class="page-link">2</span>-->
-<!--                </li>-->
-<!--                <li class="page-item"><a class="page-link" href="#">3</a></li>-->
-                <li class="page-item" th:classappend="${result.last} ? disabled : ''">
+
+                <li class="page-item" th:classappend="${result.pageNo} == 1 ? active">
+                    <span class="page-link" th:if="${result.pageNo} == 1">1</span>
+                    <a class="page-link" th:if="${result.pageNo} != 1" th:href="@{/employee(pageSize=${result.pageSize}, pageNo=1)}">1</a>
+                </li>
+
+                <li class="page-item" th:if="${result.pageNo} == 4"><span class="page-link">2</span></li>
+                <li class="page-item" th:if="${result.pageNo} &gt; 4"><span class="page-link">...</span></li>
+                
+                <li class="page-item" th:classappend="${i} == ${result.pageNo} ? active"
+                    th:each="i: ${#numbers.sequence(result.pageNo - 1, result.pageNo + 1)}"
+                    th:if="${i} &gt; 1 and ${i} &lt; ${result.pagesCount}">
+
+                    <span class="page-link" th:if="${i} == ${result.pageNo}" th:text="${i}"></span>
+                    <a class="page-link" th:if="${i} != ${result.pageNo}" th:href="@{/employee(pageSize=${result.pageSize}, pageNo=${i})}" th:text="${i}"></a>
+                </li>
+
+                <li class="page-item" th:if="${result.pageNo} == ${result.pagesCount - 3}"><span class="page-link" th:text="${result.pagesCount - 1}"></span></li>
+                <li class="page-item" th:if="${result.pageNo} &lt; ${result.pagesCount - 3}"><span class="page-link">...</span></li>
+
+                <li class="page-item" th:classappend="${result.pageNo} == ${result.pagesCount} ? active">
+                    <span class="page-link" th:if="${result.pageNo} == ${result.pagesCount}" th:text="${result.pagesCount}"></span>
+                    <a class="page-link" th:if="${result.pageNo} != ${result.pagesCount}" th:href="@{/employee(pageSize=${result.pageSize}, pageNo=${result.pagesCount})}" th:text="${result.pagesCount}"></a>
+                </li>
+
+                <li class="page-item" th:classappend="${result.last} ? disabled">
                     <span th:if="${result.last}" class="page-link">Next</span>
                     <a th:if="!${result.last}" class="page-link" th:href="@{/employee(pageSize=${result.pageSize}, pageNo=${result.pageNo + 1})}">Next</a>
                 </li>
+
             </ul>
+
         </nav>
 
         <table class="table">

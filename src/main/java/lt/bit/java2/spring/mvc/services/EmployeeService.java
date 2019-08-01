@@ -40,8 +40,7 @@ public class EmployeeService {
         if (pageSize < 1) pageSize = 1;
         else if (pageSize > 100) pageSize = 100;
         List<Employee> employees = jdbcTemplate.query("SELECT * FROM employees LIMIT ? OFFSET ?", employeeRowMapper, pageSize, (pageNo - 1) * pageSize);
-        Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM employees", Integer.class);
-        int recordCount = count == null ? 0 : count;
+        int recordCount = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM employees", Integer.class);
 
         PageResult<Employee> result = new PageResult<>();
         result.setPageNo(pageNo);
