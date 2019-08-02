@@ -60,7 +60,7 @@ class EmployeeController {
 							@RequestParam(required = false, defaultValue = "1") int pageNo,
 							ModelMap map) {
 
-		Page<Employee> result = employeeService.findAll(PageRequest.of(pageNo, pageSize));
+		Page<Employee> result = employeeService.findAll(PageRequest.of(pageNo - 1, pageSize));
 		map.addAttribute("result", result);
 
 		return "employees-list";
