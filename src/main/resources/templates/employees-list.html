@@ -11,40 +11,40 @@
 
         <nav aria-label="...">
 
-            <ul class="pagination" th:if="${result.pagesCount} &gt; 0">
+            <ul class="pagination" th:if="${result.totalPages} &gt; 0">
 
                 <li class="page-item" th:classappend="${result.first} ? disabled">
                     <span class="page-link" th:if="${result.first}">Previous</span>
-                    <a class="page-link" th:if="!${result.first}" th:href="@{/employee(pageSize=${result.pageSize}, pageNo=${result.pageNo - 1})}">Previous</a>
+                    <a class="page-link" th:if="!${result.first}" th:href="@{/employee(pageSize=${result.size}, pageNo=${result.number - 1})}">Previous</a>
                 </li>
 
-                <li class="page-item" th:classappend="${result.pageNo} == 1 ? active">
-                    <span class="page-link" th:if="${result.pageNo} == 1">1</span>
-                    <a class="page-link" th:if="${result.pageNo} != 1" th:href="@{/employee(pageSize=${result.pageSize}, pageNo=1)}">1</a>
+                <li class="page-item" th:classappend="${result.number} == 1 ? active">
+                    <span class="page-link" th:if="${result.number} == 1">1</span>
+                    <a class="page-link" th:if="${result.number} != 1" th:href="@{/employee(pageSize=${result.size}, pageNo=1)}">1</a>
                 </li>
 
-                <li class="page-item" th:if="${result.pageNo} == 4"><span class="page-link">2</span></li>
-                <li class="page-item" th:if="${result.pageNo} &gt; 4"><span class="page-link">...</span></li>
+                <li class="page-item" th:if="${result.number} == 4"><span class="page-link">2</span></li>
+                <li class="page-item" th:if="${result.number} &gt; 4"><span class="page-link">...</span></li>
                 
-                <li class="page-item" th:classappend="${i} == ${result.pageNo} ? active"
-                    th:each="i: ${#numbers.sequence(result.pageNo - 1, result.pageNo + 1)}"
-                    th:if="${i} &gt; 1 and ${i} &lt; ${result.pagesCount}">
+                <li class="page-item" th:classappend="${i} == ${result.number} ? active"
+                    th:each="i: ${#numbers.sequence(result.number - 1, result.number + 1)}"
+                    th:if="${i} &gt; 1 and ${i} &lt; ${result.totalPages}">
 
-                    <span class="page-link" th:if="${i} == ${result.pageNo}" th:text="${i}"></span>
-                    <a class="page-link" th:if="${i} != ${result.pageNo}" th:href="@{/employee(pageSize=${result.pageSize}, pageNo=${i})}" th:text="${i}"></a>
+                    <span class="page-link" th:if="${i} == ${result.number}" th:text="${i}"></span>
+                    <a class="page-link" th:if="${i} != ${result.number}" th:href="@{/employee(pageSize=${result.size}, pageNo=${i})}" th:text="${i}"></a>
                 </li>
 
-                <li class="page-item" th:if="${result.pageNo} == ${result.pagesCount - 3}"><span class="page-link" th:text="${result.pagesCount - 1}"></span></li>
-                <li class="page-item" th:if="${result.pageNo} &lt; ${result.pagesCount - 3}"><span class="page-link">...</span></li>
+                <li class="page-item" th:if="${result.number} == ${result.totalPages - 3}"><span class="page-link" th:text="${result.totalPages - 1}"></span></li>
+                <li class="page-item" th:if="${result.number} &lt; ${result.totalPages - 3}"><span class="page-link">...</span></li>
 
-                <li class="page-item" th:classappend="${result.pageNo} == ${result.pagesCount} ? active">
-                    <span class="page-link" th:if="${result.pageNo} == ${result.pagesCount}" th:text="${result.pagesCount}"></span>
-                    <a class="page-link" th:if="${result.pageNo} != ${result.pagesCount}" th:href="@{/employee(pageSize=${result.pageSize}, pageNo=${result.pagesCount})}" th:text="${result.pagesCount}"></a>
+                <li class="page-item" th:classappend="${result.number} == ${result.totalPages} ? active">
+                    <span class="page-link" th:if="${result.number} == ${result.totalPages}" th:text="${result.totalPages}"></span>
+                    <a class="page-link" th:if="${result.number} != ${result.totalPages}" th:href="@{/employee(pageSize=${result.size}, pageNo=${result.totalPages})}" th:text="${result.totalPages}"></a>
                 </li>
 
                 <li class="page-item" th:classappend="${result.last} ? disabled">
                     <span th:if="${result.last}" class="page-link">Next</span>
-                    <a th:if="!${result.last}" class="page-link" th:href="@{/employee(pageSize=${result.pageSize}, pageNo=${result.pageNo + 1})}">Next</a>
+                    <a th:if="!${result.last}" class="page-link" th:href="@{/employee(pageSize=${result.size}, pageNo=${result.number + 1})}">Next</a>
                 </li>
 
             </ul>
@@ -57,7 +57,7 @@
                 <th>First Name</th>
                 <th>Last Name</th>
             </tr>
-            <tr th:each="employee : ${result.data}">
+            <tr th:each="employee : ${result.content}">
                 <td><a th:href="@{/employee/{id}(id=${employee.empNo})}" th:text="${employee.empNo}"></a></td>
                 <td th:text="${employee.firstName}"></td>
                 <td th:text="${employee.lastName}"></td>

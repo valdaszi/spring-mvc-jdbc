@@ -1,61 +1,33 @@
 package lt.bit.java2.spring.mvc;
 
+import lombok.Data;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "employees")
+@Data
 public class Employee {
 
+    @Id
+    @Column(name = "emp_no")
     private Integer empNo;
+
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
-    private LocalDate birthDate;
-    private LocalDate hireDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "enum('M','F')")
     private Gender gender;
 
-    public Integer getEmpNo() {
-        return empNo;
-    }
+    @Column(name = "hire_date")
+    private LocalDate hireDate;
 
-    public void setEmpNo(Integer empNo) {
-        this.empNo = empNo;
-    }
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public LocalDate getHireDate() {
-        return hireDate;
-    }
-
-    public void setHireDate(LocalDate hireDate) {
-        this.hireDate = hireDate;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
 }
