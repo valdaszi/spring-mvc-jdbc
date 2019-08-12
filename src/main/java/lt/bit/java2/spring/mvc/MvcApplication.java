@@ -1,5 +1,7 @@
 package lt.bit.java2.spring.mvc;
 
+import lt.bit.java2.spring.mvc.entities.Employee;
+import lt.bit.java2.spring.mvc.entities.Title;
 import lt.bit.java2.spring.mvc.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -10,12 +12,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
-import java.time.LocalDate;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,6 +89,7 @@ class EmployeeApi {
 
 	@PostMapping()
 	ResponseEntity<Employee> create(@RequestBody Employee employee) {
+		employee.getTitles().forEach(t -> t.setEmployee(employee));
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(employeeService.save(employee));
 	}

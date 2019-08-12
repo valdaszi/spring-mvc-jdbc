@@ -25,7 +25,14 @@ Accept: application/json
   "lastName": "B",
   "gender": "F",
   "birthDate": "1990-01-31",
-  "hireDate": "2019-12-31"
+  "hireDate": "2016-02-29",
+  "titles": [
+    {
+      "title": "Senior Engineer",
+      "fromDate": "2016-02-29",
+      "toDate": "9999-01-01"
+    }
+  ]
 }
 
 ###

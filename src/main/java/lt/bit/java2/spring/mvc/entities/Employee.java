@@ -1,9 +1,10 @@
-package lt.bit.java2.spring.mvc;
+package lt.bit.java2.spring.mvc.entities;
 
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "employees")
@@ -29,5 +30,12 @@ public class Employee {
 
     @Column(name = "birth_date")
     private LocalDate birthDate;
+
+    @OneToMany(mappedBy = "employee",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Title> titles;
 
 }
