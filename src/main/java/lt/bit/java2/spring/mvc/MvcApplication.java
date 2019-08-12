@@ -6,17 +6,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 public class MvcApplication {
@@ -58,12 +59,48 @@ class EmployeeController {
 	@GetMapping
 	String getEmployeesList(@RequestParam(required = false, defaultValue = "10") int pageSize,
 							@RequestParam(required = false, defaultValue = "1") int pageNo,
+							@RequestParam(required = false, defaultValue = "empNo") String orderBy,
 							ModelMap map) {
 
-		Page<Employee> result = employeeService.findAll(PageRequest.of(pageNo - 1, pageSize));
+		Page<Employee> result = employeeService.findAll(PageRequest.of(pageNo - 1, pageSize, Sort.by(orderBy)));
 		map.addAttribute("result", result);
-
+		map.addAttribute("orderBy", orderBy);
 		return "employees-list";
 	}
+}
+
+@RestController
+@RequestMapping("/api/employee")
+class EmployeeApi {
+
+	final EmployeeService employeeService;
+
+	public EmployeeApi(EmployeeService employeeService) {
+		this.employeeService = employeeService;
+	}
+
+	@GetMapping("/{id}")
+	ResponseEntity<Employee> getEmployee(@PathVariable int id) {
+		Optional<Employee> employee = employeeService.findById(id);
+		return employee.isPresent() ? ResponseEntity.ok(employee.get()) :
+				ResponseEntity.notFound().build();
+	}
+
+	@PostMapping()
+	ResponseEntity<Employee> create(@RequestBody Employee employee) {
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(employeeService.save(employee));
+	}
+
+	@DeleteMapping("/{id}")
+	ResponseEntity delete(@PathVariable int id) {
+		Optional<Employee> employee = employeeService.findById(id);
+		if (employee.isPresent()) {
+			employeeService.delete(employee.get());
+			return ResponseEntity.status(HttpStatus.OK).build();
+		}
+		return ResponseEntity.notFound().build();
+	}
+
 }
 

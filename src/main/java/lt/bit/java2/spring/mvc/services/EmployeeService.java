@@ -10,5 +10,6 @@ public interface EmployeeService extends JpaRepository<Employee, Integer> {
 
 //    @Query("SELECT .... ")
 //    List<Employee> find(String firstName);
+
 }
 

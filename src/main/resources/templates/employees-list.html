@@ -57,7 +57,7 @@
                 <!-- Next -->
                 <li class="page-item" th:classappend="${result.last} ? disabled">
                     <span th:if="${result.last}" class="page-link">Next</span>
-                    <a th:if="!${result.last}" class="page-link" th:href="@{/employee(pageSize=${result.size}, pageNo=${result.number + 2})}">Next</a>
+                    <a th:if="!${result.last}" class="page-link" th:href="@{/employee(pageSize=${result.size}, pageNo=${result.number + 2}, orderBy=${orderBy})}">Next</a>
                 </li>
 
             </ul>
@@ -67,7 +67,9 @@
         <table class="table">
             <tr>
                 <th>Emp No</th>
-                <th>First Name</th>
+                <th><a th:href="@{/employee(pageSize=${result.size}, orderBy=firstName)}">First Name</a>
+<!--                    <span th:text="${result.sort.iterator().next().property}"></span>-->
+                </th>
                 <th>Last Name</th>
             </tr>
             <tr th:each="employee : ${result.content}">
