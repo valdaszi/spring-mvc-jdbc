@@ -1,4 +1,4 @@
-package lt.bit.java2.spring.mvc;
+package lt.bit.java2.spring.mvc.controllers;
 
 import lt.bit.java2.spring.mvc.entities.Employee;
 import lt.bit.java2.spring.mvc.entities.Title;
@@ -15,7 +15,7 @@ import java.util.Optional;
 @RequestMapping("/api/employee")
 class EmployeeApi {
 
-	final EmployeeService employeeService;
+	private final EmployeeService employeeService;
 
 	public EmployeeApi(EmployeeService employeeService) {
 		this.employeeService = employeeService;
