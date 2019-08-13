@@ -28,6 +28,11 @@ Accept: application/json
   "hireDate": "2016-02-29",
   "titles": [
     {
+      "title": "Engineer",
+      "fromDate": "2016-01-01",
+      "toDate": "2016-02-29"
+    },
+    {
       "title": "Senior Engineer",
       "fromDate": "2016-02-29",
       "toDate": "9999-01-01"
@@ -39,5 +44,32 @@ Accept: application/json
 
 DELETE http://localhost:8080/api/employee/2
 Accept: application/json
+
+###
+
+PUT http://localhost:8080/api/employee
+Content-Type: application/json
+Accept: application/json
+
+{
+  "empNo": 2,
+  "firstName": "Antanas",
+  "lastName": "Birutis",
+  "gender": "M",
+  "birthDate": "1990-01-31",
+  "hireDate": "2016-02-29",
+  "titles": [
+    {
+      "title": "Senior Engineer",
+      "fromDate": "2016-02-29",
+      "toDate": "2016-03-15"
+    },
+    {
+      "title": "Master Engineer",
+      "fromDate": "2016-03-15",
+      "toDate": "9999-01-01"
+    }
+  ]
+}
 
 ###
